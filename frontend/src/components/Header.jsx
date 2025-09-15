@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from "../assets/images/logo.jpeg";  // adjust path if Header.jsx is in another folder
+import profile from "../assets/images/user.webp"; // default profile image
 
 
 export default function Header() {
@@ -80,7 +81,7 @@ export default function Header() {
                 className="flex items-center gap-2 px-3 py-2 rounded-full hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-300"
                 onClick={() => setProfileOpen((open) => !open)}
               >
-                <img src="/profile.png" alt="Profile" className="h-8 w-8 rounded-full" />
+                <img src={profile} alt="Profile" className="h-8 w-8 rounded-full" />
                 <span className="hidden md:inline text-sm font-medium text-gray-700">
                   {user.name || "Profile"}
                 </span>

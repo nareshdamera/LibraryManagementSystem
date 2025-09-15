@@ -28,4 +28,12 @@ public class UsersService {
     public List<Users> getAllUsers() {
         return usersRepo.findAll();
     }
+
+    public Users authenticate(String email, String password) {
+        Users user = usersRepo.findByEmail(email);
+        if (user != null && user.getPassword().equals(password)) {
+            return user;
+        }
+        return null;
+    }
 }
