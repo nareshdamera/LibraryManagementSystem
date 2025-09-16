@@ -35,6 +35,15 @@ public class BooksController {
         return booksService.getAllBooks();
     }
 
+    @GetMapping("/books/{id}")
+    public ResponseEntity<Books> getBookById(@PathVariable Long id) {
+        Books book = booksService.getBookById(id);
+        if (book == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(book);
+    }
+
     @GetMapping("/removebooks")
     public void removeBooks(){
         booksService.removeBooks();

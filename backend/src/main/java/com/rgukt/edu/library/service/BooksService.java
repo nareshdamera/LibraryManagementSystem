@@ -12,9 +12,13 @@ import java.util.List;
 
 @Service
 public class BooksService {
-    BooksRepo booksRepo;
+    static BooksRepo booksRepo;
     BooksService(BooksRepo booksRepo){
         this.booksRepo=booksRepo;
+    }
+
+    public Books getBookById(Long id) {
+        return booksRepo.findById(id).orElse(null);
     }
 
 

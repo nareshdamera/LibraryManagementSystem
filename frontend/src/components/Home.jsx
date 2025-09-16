@@ -1,8 +1,9 @@
-
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [books, setBooks] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:8080/books")
@@ -20,7 +21,8 @@ function Home() {
         {books.map((book) => (
           <div
             key={book.bookId}
-            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow"
+            className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+            onClick={() => navigate(`/books/${book.bookId}`)}
           >
             <img
               src={`data:image/jpeg;base64,${book.image}`}
