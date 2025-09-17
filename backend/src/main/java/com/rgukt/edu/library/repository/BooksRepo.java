@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface BooksRepo extends JpaRepository<Books,Long> {
-    Optional<Books> findById(Long id);
+public interface BooksRepo extends JpaRepository<Books,String> {
+    Optional<Books> findById(String id);
 }

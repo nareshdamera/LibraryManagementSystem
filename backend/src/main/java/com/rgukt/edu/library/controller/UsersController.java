@@ -18,10 +18,6 @@ public class UsersController {
         this.usersService=usersService;
     }
 
-    @GetMapping("/")
-    public String greet(){
-        return "Hello";
-    }
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody Users user) {
         try {
@@ -39,7 +35,7 @@ public class UsersController {
         String password = credentials.get("password");
         Users user = usersService.authenticate(email, password);
         if (user != null) {
-            session.setAttribute("userId", user.getUserId());
+            session.setAttribute("studentId", user.getStudentId());
             session.setAttribute("email", user.getEmail());
             session.setAttribute("role", user.getRole());
             Map<String, Object> response = Map.of(
@@ -63,6 +59,10 @@ public class UsersController {
     public List<Users> allUsers(){
         return usersService.getAllUsers();
 
+    }
+    @GetMapping("/removeAllUsers")
+    public void remove(){
+        usersService.removeAllUsers();
     }
 
 

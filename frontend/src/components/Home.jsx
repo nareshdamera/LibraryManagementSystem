@@ -20,9 +20,9 @@ function Home() {
       <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {books.map((book) => (
           <div
-            key={book.bookId}
+            key={book.bookCode}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
-            onClick={() => navigate(`/books/${book.bookId}`)}
+            onClick={() => navigate(`/books/${book.bookCode}`)}
           >
             <img
               src={`data:image/jpeg;base64,${book.image}`}

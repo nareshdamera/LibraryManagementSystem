@@ -10,8 +10,8 @@ export default function LoginForm() {
   const validate = () => {
     const errs = {};
     if (!form.email.trim()) errs.email = "Email is required";
-    else if (!/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(form.email))
-      errs.email = "Enter a valid email";
+    else if (!/^b\d{6}@rgukt\.ac\.in$/.test(form.email))
+      errs.email = "Enter a valid RGUKT student email";
     if (!form.password) errs.password = "Password is required";
     return errs;
   };

@@ -15,15 +15,16 @@ public class UsersService {
     }
 
     public void registerUser(Users user){
-        if(!user.getEmail().endsWith("@rgukt.ac.in")){
-            throw new RuntimeException("This is only for RGUKT students");
-        }
         if(usersRepo.findByEmail(user.getEmail())!=null){
             throw new RuntimeException("Email already exists");
+        }
+        if(usersRepo.findById(user.getStudentId()).isPresent()){
+            throw new RuntimeException("Student ID already exists");
         }
         user.setRole("STUDENT");
         usersRepo.save(user);
     }
+
 
     public List<Users> getAllUsers() {
         return usersRepo.findAll();
@@ -35,5 +36,8 @@ public class UsersService {
             return user;
         }
         return null;
+    }
+    public void removeAllUsers(){
+        usersRepo.deleteAll();
     }
 }

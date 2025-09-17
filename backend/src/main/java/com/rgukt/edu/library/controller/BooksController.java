@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
 public class BooksController {
@@ -17,12 +19,15 @@ public class BooksController {
 
     @PostMapping("/addbook")
     public ResponseEntity<String> registerBook(
+            @RequestParam("bookCode") String bookCode,
             @RequestParam("title") String title,
             @RequestParam("author") String author,
-            @RequestParam("availableQuantity") Integer availableQuantity,
+            @RequestParam("category") String category,
+            @RequestParam("description") String description,
+            @RequestParam("quantity") Integer availableQuantity,
             @RequestParam("image")MultipartFile image){
         try{
-            booksService.registerBook(title,author,availableQuantity,image);
+            booksService.registerBook(bookCode,title,author,category,description,availableQuantity,image);
             return ResponseEntity.ok("Book Added successfully");
 
         }catch (Exception e){
@@ -36,8 +41,8 @@ public class BooksController {
     }
 
     @GetMapping("/books/{id}")
-    public ResponseEntity<Books> getBookById(@PathVariable Long id) {
-        Books book = booksService.getBookById(id);
+    public ResponseEntity<Optional<Books>> getBookById(@PathVariable String id) {
+        Optional<Books> book = booksService.getBookById(id);
         if (book == null) {
             return ResponseEntity.notFound().build();
         }

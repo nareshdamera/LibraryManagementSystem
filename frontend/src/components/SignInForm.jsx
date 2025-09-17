@@ -9,6 +9,7 @@ export default function SignInForm() {
     email: "",
     password: "",
     confirm: "",
+    studentId: "",
   });
   const [errors, setErrors] = useState({});
   const [submitted, setSubmitted] = useState(false);
@@ -17,11 +18,17 @@ export default function SignInForm() {
   const validate = () => {
     const errs = {};
     if (!form.name.trim()) errs.name = "Name is required";
-    // if (!form.email.match(/^[\w-.]+@[\w-]+\.[A-Za-z]{2,}$/)) errs.email = "Valid email is required";
+    if (!form.email.match(/^[b]\d{6}@rgukt\.ac\.in$/)) {
+      errs.email = "Email must be your Student Id followed by @rgukt.ac.in";
+    }
     if (!form.password) errs.password = "Password is required";
     if (form.password.length < 8)
       errs.password = "Password must be at least 8 characters";
     if (form.password !== form.confirm) errs.confirm = "Passwords do not match";
+    if (!form.studentId.match(/^[Bb]\d{6}$/)) {
+      errs.studentId =
+        "Please enter valid Id";
+    }
     return errs;
   };
 
@@ -43,6 +50,7 @@ export default function SignInForm() {
             name: form.name,
             email: form.email,
             password: form.password,
+            studentId: form.studentId,
           }),
         });
 
@@ -105,6 +113,26 @@ export default function SignInForm() {
             <p className="text-red-500 text-xs mt-1">{errors.name}</p>
           )}
         </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            Student Id
+          </label>
+          <input
+            name="studentId"
+            type="text"
+            className={`w-full px-3 py-2 border rounded focus:outline-none ${
+              errors.studentId ? "border-red-500" : "border-gray-300"
+            }`}
+            value={form.studentId}
+            onChange={handleChange}
+            maxLength={7}
+            placeholder="B201013"
+          />
+          {errors.studentId && (
+            <p className="text-red-500 text-xs mt-1">{errors.studentId}</p>
+          )}
+        </div>
+
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Student Email ID

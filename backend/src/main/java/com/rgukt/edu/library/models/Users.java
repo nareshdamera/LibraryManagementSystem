@@ -6,8 +6,8 @@ import jakarta.persistence.*;
 public class Users {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-increment PK
-    private Long userId;
+    @Column(unique = true)
+    private String studentId;
 
     @Column(nullable = false)
     private String name;
@@ -27,20 +27,22 @@ public class Users {
     public Users() {}
 
     // Constructor
-    public Users(String name, String email, String password, String role) {
+    public Users(String studentId,String name, String email, String password, String role) {
+        this.studentId=studentId != null ? studentId.toUpperCase() : null;
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
+
     }
 
     // Getters and Setters
-    public Long getUserId() {
-        return userId;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setStudentId(String studentId) {
+        this.studentId = studentId != null ? studentId.toUpperCase() : null;
     }
 
     public String getName() {

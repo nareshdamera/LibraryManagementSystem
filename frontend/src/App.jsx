@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import SignInForm from "./components/SignInForm";
 import LoginForm from "./components/LoginForm";
 import BookDetails from "./components/BooksDetails";
+import AddBookForm from "./components/admin/AddBookForm";
 
 function App() {
   const location = useLocation();
@@ -20,6 +21,7 @@ function App() {
         <Route path="/signin" element={<SignInForm />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/books/:bookId" element={<BookDetails />} />
+        <Route path="/addbook" element={<AddBookForm />} />
 
       </Routes>
     </>

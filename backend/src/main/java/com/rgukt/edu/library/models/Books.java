@@ -9,48 +9,51 @@ import java.io.IOException;
 @Table(name="books")
 public class Books {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookId;
+    @Column(unique = true)
+    private String bookCode;
 
     @Column(nullable = false)
     private String title;
+
     @Column(nullable = false)
     private String author;
+
+    @Column(nullable = false)
+    private String category;
+
+    @Column(nullable = false)
+    private String description;
+
     @Column(nullable = false)
     private Integer availableQuantity;
 
     @Lob
     @Column(name = "image")
     private byte[]image;
+
     public Books(){}
 
-    public Long getId() {
-        return bookId;
-    }
-
-    public void setId(Long id) {
-        this.bookId = id;
-    }
-
-    public Books(String title, String author, Integer availableQuantity, MultipartFile image) throws IOException {
+    public Books(String bookCode,String title, String author, String category,String description,Integer availableQuantity, MultipartFile image) throws IOException {
+        this.bookCode=bookCode.toUpperCase();
         this.title=title;
         this.author=author;
+        this.category=category;
+        this.description=description;
         this.availableQuantity=availableQuantity;
         this.image= image.getBytes();
-    }
 
-    public Long getBookId() {
-        return bookId;
-    }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    }
+    public void setBookCode(String bookCode){
+        this.bookCode=bookCode.toUpperCase();
+    }
+    public String getBookCode(){
+        return bookCode;
     }
 
     public String getTitle() {
         return title;
     }
-
     public void setTitle(String title) {
         this.title = title;
     }
@@ -58,9 +61,22 @@ public class Books {
     public String getAuthor() {
         return author;
     }
-
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public void setCategory(String category) {
+        this.category=category;
+    }
+    public String getCategory(){
+        return category;
+    }
+
+    public void setDescription(String description){
+        this.description=description;
+    }
+    public String getDescription() {
+        return description;
     }
 
     public Integer getAvailableQuantity() {
@@ -77,6 +93,9 @@ public class Books {
     public void setImage(byte[] image){
         this.image=image;
     }
+
+
+
 
 
 
