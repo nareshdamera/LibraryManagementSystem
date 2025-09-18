@@ -39,7 +39,12 @@ export default function LoginForm() {
           // Assume backend returns user info (name, email, role)
           localStorage.setItem("user", JSON.stringify(data.user));
           setSubmitted(true);
-          navigate("/");
+          if(data.user.role === "ADMIN") {
+            navigate("/admin");
+          }else{
+            navigate("/");
+          }
+          
         } else {
           setErrors({ password: "Invalid login" });
           setSubmitted(false);
