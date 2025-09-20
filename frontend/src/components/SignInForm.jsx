@@ -64,7 +64,7 @@ export default function SignInForm() {
 
           localStorage.setItem(
             "user",
-            JSON.stringify({ email: form.email, name: form.name })
+            JSON.stringify({ email: form.email, name: form.name, studentId: form.studentId, role: "STUDENT" })
           );
 
           navigate("/");

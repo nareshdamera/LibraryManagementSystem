@@ -36,7 +36,7 @@ export default function LoginForm() {
 
         if (response.ok) {
           const data = await response.json();
-          // Assume backend returns user info (name, email, role)
+          // Assume backend returns user info (name, email, role,studentId)
           localStorage.setItem("user", JSON.stringify(data.user));
           setSubmitted(true);
           if(data.user.role === "ADMIN") {

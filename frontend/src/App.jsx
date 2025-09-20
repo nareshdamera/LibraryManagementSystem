@@ -7,6 +7,7 @@ import BookDetails from "./components/BooksDetails";
 import AddBookForm from "./components/admin/AddBookForm";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
+import BorrowedBooks from "./components/BorrowedBooks";
 
 function App() {
   const location = useLocation();
@@ -22,7 +23,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/signin" element={<SignInForm />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/books/:bookId" element={<BookDetails />} />
+        <Route path="/books/:bookCode" element={<BookDetails />} />
+        <Route path="/borrowed-books" element={<BorrowedBooks />} />
         
         <Route path="/addbook" element={<AddBookForm />} />
 

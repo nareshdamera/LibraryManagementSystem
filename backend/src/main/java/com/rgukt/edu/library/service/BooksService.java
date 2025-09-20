@@ -60,6 +60,27 @@ public class BooksService {
         booksRepo.save(newBook);
     }
 
+    public void updateBook(String bookCode, String title, String author, String category,
+                           String description, Integer availableQuantity, MultipartFile image) throws IOException {
+        Optional<Books> optionalBook = booksRepo.findById(bookCode);
+        if (optionalBook.isEmpty()) throw new RuntimeException("Book not found");
+
+        Books book = optionalBook.get();
+        book.setTitle(title);
+        book.setAuthor(author);
+        book.setCategory(category);
+        book.setDescription(description);
+        book.setAvailableQuantity(availableQuantity);
+
+        if (image != null && !image.isEmpty()) {
+            book.setImage(image.getBytes());
+        }
+
+        booksRepo.save(book);
+    }
+
+
+
 
     public Optional<Books> getBookById(String id) {
         return booksRepo.findById(id);

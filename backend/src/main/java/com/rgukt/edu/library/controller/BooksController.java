@@ -2,6 +2,7 @@ package com.rgukt.edu.library.controller;
 
 import com.rgukt.edu.library.models.Books;
 import com.rgukt.edu.library.service.BooksService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,9 +50,30 @@ public class BooksController {
         return ResponseEntity.ok(book);
     }
 
+    @PutMapping("/books/{bookCode}")
+    public ResponseEntity<?> updateBook(
+            @PathVariable String bookCode,
+            @RequestParam("title") String title,
+            @RequestParam("author") String author,
+            @RequestParam("category") String category,
+            @RequestParam("description") String description,
+            @RequestParam("quantity") Integer availableQuantity,
+            @RequestParam(value = "image", required = false) MultipartFile image
+    ) {
+        try {
+            booksService.updateBook(bookCode, title, author, category, description, availableQuantity, image);
+            // return updated book as response
+            return ResponseEntity.ok(booksService.getBookById(bookCode).orElseThrow());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: " + e.getMessage());
+        }
+    }
+
+
     @GetMapping("/removebooks")
     public void removeBooks(){
         booksService.removeBooks();
     }
+
 
 }

@@ -2,26 +2,28 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 function BookDetails() {
-  const { bookId } = useParams();
+  const { bookCode } = useParams();
   const [book, setBook] = useState(null);
   const [borrowStatus, setBorrowStatus] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8080/books/${bookId}`)
+    fetch(`http://localhost:8080/books/${bookCode}`)
       .then((res) => res.json())
       .then((data) => setBook(data))
       .catch((err) => console.error("Error fetching book details:", err));
-  }, [bookId]);
+  }, [bookCode]);
 
   const borrowBook = () => {
-    fetch(`http://localhost:8080/borrow/${bookId}`, {
+    const user=JSON.parse(localStorage.getItem("user"));
+    const studentId=user?.studentId;
+    fetch(`http://localhost:8080/borrow/${bookCode}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       // If the student user needs authentication or info, add it here.
-      body: JSON.stringify({ /* studentId: ... */ })
+      body: JSON.stringify({studentId}),
     })
       .then((res) => {
-        if (res.ok) setBorrowStatus("Successfully borrowed!");
+        if (res.ok) setBorrowStatus("Request sent! Collect your book in the Library.");
         else throw new Error("Borrow failed!");
       })
       .catch((err) => setBorrowStatus("Borrowing failed!"));
