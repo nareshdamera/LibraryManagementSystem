@@ -6,7 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.rgukt.edu.library.dto.BorrowRequest;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,11 +71,36 @@ public class BooksController {
         }
     }
 
+    @PostMapping("/borrow/{bookCode}")
+    public ResponseEntity<String> borrowBook(@PathVariable String bookCode, @RequestBody BorrowRequest borrowRequest) throws IOException {
+        String studentId = borrowRequest.getStudentId();
+
+        // Business logic: Locate book, check availability, register borrow, etc.
+        Optional<Books> bookOpt = booksService.getBookById(bookCode);
+        if (bookOpt.isEmpty())
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
+
+        Books book = bookOpt.get();
+        if (book.getAvailableQuantity() <= 0)
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Book is not available");
+
+        // Example: Update book quantity and return success
+        book.setAvailableQuantity(book.getAvailableQuantity() - 1);
+        booksService.updateBook(book.getBookCode(), book.getTitle(), book.getAuthor(), book.getCategory(),
+                book.getDescription(), book.getAvailableQuantity(), null);
+
+        // You can also log the borrow record and associate with studentId
+        return ResponseEntity.ok("Borrow request successful for student: " + studentId);
+    }
+
+
+
 
     @GetMapping("/removebooks")
     public void removeBooks(){
         booksService.removeBooks();
     }
+
 
 
 }
